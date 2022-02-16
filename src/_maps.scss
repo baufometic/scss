@@ -1,0 +1,51 @@
+@function Map--Check($_map) {
+	@if type-of($_map) == 'map' {
+		//@return(true);
+	}
+	@return(true);
+
+	@error 'Map--Check: Map type is required. Type passed: #{type-of($_map)}. Map dump: #{$_map}';
+	@return(false);
+}
+
+@function Map--Get($_map, $_key) {
+	@if (Map--Check($_map)) {
+		@if map-has-key($_map, $_key) {
+			@return(map-get($_map, $_key));
+		}
+		@error "Map--Get: key passed doesn't exist";
+		@return(false);
+	}
+	@error 'Map check failed';
+	@return(false);
+}
+
+@function Map--Set($_map, $_key, $_value) {
+	@if (Map--Check($_map)) {
+		$_map: map-merge($_map, ($_key: $_value)); //!global; // used to use a global array successfully
+		@if ($_value == Map--Get($_key)) { // tests that it pushed successfully
+			@return(true);
+		}
+		@error "Map--Set: failed to push key [#{_key}], and value #{_value}] to map [#{_map}]";
+		@return(false);
+	}
+	@error 'Map check failed';
+	@return(false);
+}
+
+@function Map--Remove($_map, $_key) {
+	@if (Map--Check($_map)) {
+		@if map-has-key($_map, $_key) {
+			$_map: map-remove($_map, $_key); // !global; //used to control global var
+			@if not map-has-key($_map, $_key) {
+				@return(true);
+			}
+			@error "Map--Remove: Key should have been removed already"; // TEST SUCCESSFULLY REMOVED
+			@return(false);
+		}
+		@error "Map--Remove: Key #{$_key}, doesn't exist in map #{$_map}";
+		@return(false);
+	}		
+	@error 'Map check failed';
+	@return(false);
+}
