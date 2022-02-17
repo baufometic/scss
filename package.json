@@ -4,13 +4,6 @@
 	"author": "Pete Savva <p.savva@protonmail.ch> (https://techandtribal.com)",
 	"description": "Random SCSS tools",
 	"license": "ISC",
-	"scripts": {
-		"extract-one": "bash ./scripts/extract-one.sh",
-		"extract-all": "bash ./scripts/extract-all.sh"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/baufometic/scss.git"
